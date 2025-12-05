@@ -1,0 +1,98 @@
+name: 'Test Deploy Ansible Playbook'
+description: |
+  Provisions an OpenStack compute instance, runs a user-defined Ansible Playbook
+  against the instance, collects artifacts, and cleans up resources afterwards.
+
+inputs:
+  os-auth-url:
+    description: 'URL pointing to OpenStack authentication API'
+    required: true
+
+  os-region-name:
+    description: 'OpenStack region name. Example: RegionOne'
+    required: true
+
+  os-application-credential-id:
+    description: 'OpenStack application credential ID'
+    required: true
+
+  os-application-credential-secret:
+    description: 'OpenStack application credential secret'
+    required: true
+
+  os-external-network-name:
+    description: 'Name of the external OpenStack network for floating IPs'
+    required: true
+
+  os-private-network-name:
+    description: 'Name of the private OpenStack network name to attach the test compute instance to'
+    required: true
+
+  os-security-group-name:
+    description: 'Name of the OpenStack security group assgined to the test compute instance'
+    required: true
+
+  os-keypair-name:
+    description: 'Name of the pre-uploaded public ssh keypair in OpenStack'
+    required: true
+
+  os-flavor-name:
+    description: 'Name the OpenStack flavor to use for the instance'
+    required: true
+
+  os-image-name:
+    description: 'Name of the image to use for the OpenStack compute instance'
+    required: true
+
+  instance-name-prefix:
+    description: 'Prefix for the OpenStack compute instance (will prepend to the GitHub run id)'
+    required: false
+    default: 'github'
+
+  ansible-user:
+    description: 'Operative system user which Ansible impersonates when connecting to the test compute intance'
+    required: true
+
+  ansible-ssh-private-key:
+    description: 'Value of the private ssh keypair for compute instance access'
+    required: true
+
+  path-to-main-file:
+    description: 'Path to main file for the Ansible Playbook execution. Example: site.yml'
+    required: true
+
+  path-to-requirements-file:
+    description: 'Path to requirements file needed for the Ansible Playbook. Example: requirements.yml'
+    required: false
+    default: ''
+
+  input-spec-json:
+    description: 'Input values for the Ansible Playbook, in JSON format'
+    required: false
+    default: '{}'
+
+outputs:
+  artifact_path:
+    description: 'Path where artifacts were written in the workflow workspace'
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  env:
+    OS_AUTH_URL: ${{ inputs.os-auth-url }}
+    OS_REGION_NAME: ${{ inputs.os-region-name }}
+    OS_APPLICATION_CREDENTIAL_ID: ${{ inputs.os-application-credential-id }}
+    OS_APPLICATION_CREDENTIAL_SECRET: ${{ inputs.os-application-credential-secret }}
+    ANSIBLE_SSH_PRIVATE_KEY: ${{ inputs.ansible-ssh-private-key }}
+  args:
+    - ${{ inputs.os-external-network-name }}
+    - ${{ inputs.os-private-network-name }}
+    - ${{ inputs.os-security-group-name }}
+    - ${{ inputs.os-flavor-name }}
+    - ${{ inputs.os-image-name }}
+    - ${{ inputs.os-keypair-name }}
+    - ${{ inputs.ansible-user }}
+    - ${{ inputs.instance-name-prefix }}
+    - ${{ inputs.path-to-main-file }}
+    - ${{ inputs.path-to-requirements-file }}
+    - ${{ inputs.input-spec-json }}
