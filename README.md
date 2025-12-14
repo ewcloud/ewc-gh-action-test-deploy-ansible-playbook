@@ -19,7 +19,7 @@ This GitHub Action setups all necesary OpenStack resources for a Ansible Playboo
     - `OS_APPLICATION_CREDENTIAL_SECRET`
 4. Create an ssh keypair
 3. Upload the public ssh key to OpenStack
-5. Within your repository's GitHub secrets, store the valud of the private ssh key as:
+5. Within your repository's GitHub secrets, store the value of the private ssh key as:
     - `ANSIBLE_SSH_PRIVATE_KEY`
 
 
@@ -44,6 +44,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Test deployment
+        id: test-deployment
         uses: ewcloud/ewc-gh-action-test-deploy-ansible-playbook@v1
         with:
           os-auth-url: '${{ secrets.OS_AUTH_URL }}'
@@ -59,6 +60,12 @@ jobs:
           ansible-user: 'ubuntu'
           ansible-ssh-private-key: '${{ secrets.ANSIBLE_SSH_PRIVATE_KEY }}'
           path-to-main-file: 'site.yml'
+
+      - name: Upload test deployment result
+        uses: actions/upload-artifact@v4
+        with:
+          name: workspace_artifacts
+          path: ${{ steps.test-deployment.outputs.artifacts-path }}
 ```
 
 ## Inputs
@@ -81,14 +88,14 @@ jobs:
 | ansible-user | Operative system user which Ansible impersonates when connecting to the test compute intance | `string` | n/a | yes |
 | ansible-ssh-private-key | Value of the private ssh keypair for compute instance access | `string` | n/a | yes |
 | path-to-main-file | Path to main file for the Ansible Playbook execution. Example: `playbooks/ssh-bastion-flavour/ssh-bastion-flavour.yml` | `string` | n/a | yes |
-| path-to-requirements-file | Path to requirements file needed for the Ansible Playbook. Example: `playbooks/ssh-bastion-flavour/requirements.yml` | `string` | `""` | no |
-| input-spec-json | Input values for the Ansible Playbook, in JSON format | `string` | `{}` | no |
+| path-to-requirements-file | Path to requirements file needed for the Ansible Playbook. Example: `playbooks/ssh-bastion-flavour/requirements.yml` | `string` | n/a | no |
+| input-spec-json | Input values for the Ansible Playbook, in JSON format. Example: `{"subscription_timestamp_override":"20251203_11h37m00s"}` | `string` | n/a | no |
 
 ## Outputs
 
 | Name | Description | Type |
 |------|-------------|------|
-| artifact_path | Path where artifacts were written in the workflow workspace | `string` |
+| artifact-path | Path where artifacts were written in the workflow workspace | `string` |
 
 ## Development
 

@@ -74,16 +74,15 @@ inputs:
   path-to-requirements-file:
     description: 'Path to requirements file needed for the Ansible Playbook. Example: requirements.yml'
     required: false
-    default: ''
 
   input-spec-json:
     description: 'Input values for the Ansible Playbook, in JSON format'
     required: false
-    default: '{}'
 
 outputs:
-  artifact_path:
+  artifact-path:
     description: 'Path where artifacts were written in the workflow workspace'
+    value: ${{ steps.test-deploy-ansible-playbook.outputs.artifact-path }}
 
 runs:
   using: 'composite'
