@@ -1,13 +1,6 @@
 # Test Deploy Ansible Playbook v1
 
-This GitHub Action setups all necesary OpenStack resources for a Ansible Playbook to run on before triggering its execution and reporting on its success/failure.
-
-## Features
-- Provisions a test OpenStack compute instance, based on user-defined image, network, etc.
-- Attaches a public floating IP address to the test instance
-- With user-defined Python and Ansible versions, configures the test instance using the specified Ansible Playbook, any extra variable inputs and required Ansible Roles
-- Generates a run summary (rendered in the GitHub UI), as well as machine-friendly run artifacts
-- Cleans up all used resources upon completion
+This GitHub Action setups all necesary OpenStack resources for a Ansible Playbook to run on before triggering its execution and reporting on its success/failure (refer to the [features](#features) section more for details).
 
 ## Prerequisites
 
@@ -67,6 +60,13 @@ jobs:
           name: workspace_artifacts
           path: ${{ steps.test-deployment.outputs.artifacts-path }}
 ```
+
+## Features
+- Provisions a test OpenStack compute instance, based on user-defined image, network, etc.
+- Attaches a public floating IP address to the test instance
+- With user-defined Python and Ansible versions, configures the test instance using the specified Ansible Playbook, any extra variable inputs and required Ansible Roles
+- Generates a run summary (rendered in the GitHub UI), as well as machine-friendly run artifacts
+- Cleans up all used resources upon completion
 
 ## Inputs
 
