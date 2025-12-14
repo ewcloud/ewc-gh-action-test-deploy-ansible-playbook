@@ -103,7 +103,7 @@ runs:
 
       - name: Test Deploy Ansible Playbook
         id: test-deploy-ansible-playbook
-        run: entrypoint.sh
+        run: test-deploy-ansible-playbook.sh
         shell: bash
         env:
           TF_IN_AUTOMATION: true
