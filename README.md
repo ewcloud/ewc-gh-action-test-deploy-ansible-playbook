@@ -1,12 +1,12 @@
 # Test Deploy Ansible Playbook v1
 
-This action setups all necesary OpenStack resources for a user-specfied Ansible Playbook to run, gather deployment details and uploads them as artifacts for audit or post-processing.
+This GitHub Action setups all necesary OpenStack resources for a Ansible Playbook to run on before triggering its execution and reporting on its success/failure.
 
 ## Features
-- Provisions a test OpenStack compute instance, based on user-provided specifications
-- Attaches a floating IP address to the test instance
-- Configures the test instance with user-defined Ansible Playbook, including required Ansible Roles and any given extra variables
-- Generates an execution summary (rendered in the GitHub UI), as well as machine-friendly run artifacts.
+- Provisions a test OpenStack compute instance, based on user-defined image, network, etc.
+- Attaches a public floating IP address to the test instance
+- With user-defined Python and Ansible versions, configures the test instance using the specified Ansible Playbook, any extra variable inputs and required Ansible Roles
+- Generates a run summary (rendered in the GitHub UI), as well as machine-friendly run artifacts
 - Cleans up all used resources upon completion
 
 ## Prerequisites
@@ -76,6 +76,8 @@ jobs:
 | os-flavor-name | Name the OpenStack flavor to use for the instance | `string` | n/a | yes |
 | os-image-name | Name of the image to use for the OpenStack compute instance | `string` | n/a | yes |
 | instance-name-prefix | Prefix for the OpenStack compute instance (will prepend to the GitHub run id) | `string` | `github` | no |
+| python-version | Python version to be used during testing | `string` | `3.9.25` | no |
+| ansible-version | Ansible version to be used during testing (must be supported by the specified Python version) | `string` | `10.7.0` | no |
 | ansible-user | Operative system user which Ansible impersonates when connecting to the test compute intance | `string` | n/a | yes |
 | ansible-ssh-private-key | Value of the private ssh keypair for compute instance access | `string` | n/a | yes |
 | path-to-main-file | Path to main file for the Ansible Playbook execution. Example: `playbooks/ssh-bastion-flavour/ssh-bastion-flavour.yml` | `string` | n/a | yes |
@@ -91,6 +93,5 @@ jobs:
 ## Development
 
 ### TODOs
-- Support running on user-defined Python and Ansible versions
 - Include OpenStack project name in summary
 - Add proper SSH status polling (with netcat or similar utility)
