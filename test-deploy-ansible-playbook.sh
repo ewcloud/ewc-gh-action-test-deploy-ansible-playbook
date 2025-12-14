@@ -1,20 +1,6 @@
 #!/usr/bin/env bash
 set -eou pipefail
 
-# --- Init ---
-# NOTE: action.yml passes positional arguments, so we have to re-map them to their orginal names
-OS_EXTERNAL_NETWORK_NAME="${1}"
-OS_PRIVATE_NETWORK_NAME="${2}"
-OS_SECURITY_GROUP_NAME="${3}"
-OS_FLAVOR_NAME="${4}"
-OS_IMAGE_NAME="${5}"
-OS_KEYPAIR_NAME="${6}"
-ANSIBLE_USER="${7}"
-INSTANCE_NAME_PREFIX="${8}"
-PATH_TO_MAIN_FILE="${9}"
-PATH_TO_REQUIREMENTS_FILE="${10}"
-INPUT_SPEC_JSON="${11}"
-
 # NOTE: For tracking status and graceful failure
 TERRAFORM_STATUS="failing"
 ANSIBLE_STATUS="failing"

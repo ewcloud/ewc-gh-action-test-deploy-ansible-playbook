@@ -76,23 +76,50 @@ outputs:
     description: 'Path where artifacts were written in the workflow workspace'
 
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
-  env:
-    OS_AUTH_URL: ${{ inputs.os-auth-url }}
-    OS_REGION_NAME: ${{ inputs.os-region-name }}
-    OS_APPLICATION_CREDENTIAL_ID: ${{ inputs.os-application-credential-id }}
-    OS_APPLICATION_CREDENTIAL_SECRET: ${{ inputs.os-application-credential-secret }}
-    ANSIBLE_SSH_PRIVATE_KEY: ${{ inputs.ansible-ssh-private-key }}
-  args:
-    - ${{ inputs.os-external-network-name }}
-    - ${{ inputs.os-private-network-name }}
-    - ${{ inputs.os-security-group-name }}
-    - ${{ inputs.os-flavor-name }}
-    - ${{ inputs.os-image-name }}
-    - ${{ inputs.os-keypair-name }}
-    - ${{ inputs.ansible-user }}
-    - ${{ inputs.instance-name-prefix }}
-    - ${{ inputs.path-to-main-file }}
-    - ${{ inputs.path-to-requirements-file }}
-    - ${{ inputs.input-spec-json }}
+  using: 'composite'
+  steps:
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.14.1
+          terraform_wrapper: false
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.10.19
+
+      - name: Setup Ansible
+        run: |
+          pip install --upgrade pip
+          pip install --no-cache-dir python-openstackclient ansible==10.7.0
+        shell: bash
+
+      - name: Set GitHub Path
+        run: echo "$GITHUB_ACTION_PATH" >> $GITHUB_PATH
+        shell: bash
+        env:
+          GITHUB_ACTION_PATH: ${{ github.action_path }}
+
+      - name: Test Deploy Ansible Playbook
+        id: test-deploy-ansible-playbook
+        run: test-deploy-ansible-playbook.sh
+        shell: bash
+        env:
+          TF_IN_AUTOMATION: true
+          OS_AUTH_URL: ${{ inputs.os-auth-url }}
+          OS_REGION_NAME: ${{ inputs.os-region-name }}
+          OS_APPLICATION_CREDENTIAL_ID: ${{ inputs.os-application-credential-id }}
+          OS_APPLICATION_CREDENTIAL_SECRET: ${{ inputs.os-application-credential-secret }}
+          ANSIBLE_SSH_PRIVATE_KEY: ${{ inputs.ansible-ssh-private-key }}
+          OS_EXTERNAL_NETWORK_NAME: ${{ inputs.os-external-network-name }}
+          OS_PRIVATE_NETWORK_NAME: ${{ inputs.os-private-network-name }}
+          OS_SECURITY_GROUP_NAME: ${{ inputs.os-security-group-name }}
+          OS_FLAVOR_NAME: ${{ inputs.os-flavor-name }}
+          OS_IMAGE_NAME: ${{ inputs.os-image-name }}
+          OS_KEYPAIR_NAME: ${{ inputs.os-keypair-name }}
+          ANSIBLE_USER: ${{ inputs.ansible-user }}
+          INSTANCE_NAME_PREFIX: ${{ inputs.instance-name-prefix }}
+          PATH_TO_MAIN_FILE: ${{ inputs.path-to-main-file }}
+          PATH_TO_REQUIREMENTS_FILE: ${{ inputs.path-to-requirements-file }}
+          INPUT_SPEC_JSON: ${{ inputs.input-spec-json }}

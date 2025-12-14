@@ -66,7 +66,7 @@ jobs:
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | os-auth-url | URL pointing to OpenStack authentication API | `string` | n/a | yes |
-| os-region-name | OpenStack region name. Example: `"RegionOne"` | `string` | n/a | yes |
+| os-region-name | OpenStack region name. Example: `RegionOne` | `string` | n/a | yes |
 | os-application-credential-id | OpenStack application credential ID | `string` | n/a | yes |
 | os-application-credential-secret | OpenStack application credential secret | `string` | n/a | yes |
 | os-external-network-name | Name of the external OpenStack network for floating IPs | `string` | n/a | yes |
@@ -78,8 +78,8 @@ jobs:
 | instance-name-prefix | Prefix for the OpenStack compute instance (will prepend to the GitHub run id) | `string` | `github` | no |
 | ansible-user | Operative system user which Ansible impersonates when connecting to the test compute intance | `string` | n/a | yes |
 | ansible-ssh-private-key | Value of the private ssh keypair for compute instance access | `string` | n/a | yes |
-| path-to-main-file | Path to main file for the Ansible Playbook execution. Example: `"playbooks/ssh-bastion-flavour/ssh-bastion-flavour.yml"` | `string` | n/a | yes |
-| path-to-requirements-file | Path to requirements file needed for the Ansible Playbook. Example: `"playbooks/ssh-bastion-flavour/requirements.yml"` | `string` | `""` | no |
+| path-to-main-file | Path to main file for the Ansible Playbook execution. Example: `playbooks/ssh-bastion-flavour/ssh-bastion-flavour.yml` | `string` | n/a | yes |
+| path-to-requirements-file | Path to requirements file needed for the Ansible Playbook. Example: `playbooks/ssh-bastion-flavour/requirements.yml` | `string` | `""` | no |
 | input-spec-json | Input values for the Ansible Playbook, in JSON format | `string` | `{}` | no |
 
 ## Outputs
@@ -94,4 +94,3 @@ jobs:
 - Support running on user-defined Python and Ansible versions
 - Include OpenStack project name in summary
 - Add proper SSH status polling (with netcat or similar utility)
-- (Optional) Refactor into `composite` action (to benefit from GitHub-provided package version rolling, but giving up the portability currently offered by `docker` action.
