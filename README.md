@@ -100,5 +100,4 @@ jobs:
 ## Development
 
 ### TODOs
-- Include OpenStack project name in summary
 - Add proper SSH status polling (with netcat or similar utility)
