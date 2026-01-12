@@ -29,7 +29,7 @@ inputs:
     required: true
 
   os-security-group-name:
-    description: 'Name of the OpenStack security group assgined to the test compute instance'
+    description: 'Name of the OpenStack security group assigned to the test compute instance'
     required: true
 
   os-keypair-name:
@@ -60,7 +60,7 @@ inputs:
     default: '10.7.0'
 
   ansible-user:
-    description: 'Operative system user which Ansible impersonates when connecting to the test compute intance'
+    description: 'Operative system user which Ansible impersonates when connecting to the test compute instance'
     required: true
 
   ansible-ssh-private-key:

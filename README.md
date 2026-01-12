@@ -1,6 +1,9 @@
 # Test Deploy Ansible Playbook v1
 
-This GitHub Action setups all necesary OpenStack resources for a Ansible Playbook to run on before triggering its execution and reporting on its success/failure (refer to the [features](#features) section more for details).
+This GitHub Action setups all necessary OpenStack resources for a Ansible Playbook to run,  executes it and reports about its success/failure in a nice looking summary (within GitHub UI), as well as machine-friendly artifacts for postprocessing.
+
+Runs with user-defined `Python` and `Ansible` versions, extra variable inputs and any `Ansible Roles` a test scenario may require.
+
 
 ## Prerequisites
 
@@ -19,6 +22,8 @@ This GitHub Action setups all necesary OpenStack resources for a Ansible Playboo
 ## Usage
 
 ```yaml
+# .github/workflows/test.yml
+---
 name: Test Deploy Ansible Playbook
 
 on:
@@ -57,16 +62,9 @@ jobs:
       - name: Upload test deployment result
         uses: actions/upload-artifact@v4
         with:
-          name: workspace_artifacts
-          path: ${{ steps.test-deployment.outputs.artifacts-path }}
+          name: artifacts_${{ github.run_id }}
+          path: ${{ steps.test-deployment.outputs.artifact-path }}
 ```
-
-## Features
-- Provisions a test OpenStack compute instance, based on user-defined image, network, etc.
-- Attaches a public floating IP address to the test instance
-- With user-defined Python and Ansible versions, configures the test instance using the specified Ansible Playbook, any extra variable inputs and required Ansible Roles
-- Generates a run summary (rendered in the GitHub UI), as well as machine-friendly run artifacts
-- Cleans up all used resources upon completion
 
 ## Inputs
 
@@ -78,14 +76,14 @@ jobs:
 | os-application-credential-secret | OpenStack application credential secret | `string` | n/a | yes |
 | os-external-network-name | Name of the external OpenStack network for floating IPs | `string` | n/a | yes |
 | os-private-network-name | Name of the private OpenStack network name to attach the test compute instance to | `string` | n/a | yes |
-| os-security-group-name | Name of the OpenStack security group assgined to the test compute instance | `string` | n/a | yes |
+| os-security-group-name | Name of the OpenStack security group assigned to the test compute instance | `string` | n/a | yes |
 | os-keypair-name | Name of the pre-uploaded public ssh keypair in OpenStack | `string` | n/a | yes |
 | os-flavor-name | Name the OpenStack flavor to use for the instance | `string` | n/a | yes |
 | os-image-name | Name of the image to use for the OpenStack compute instance | `string` | n/a | yes |
 | instance-name-prefix | Prefix for the OpenStack compute instance (will prepend to the GitHub run id) | `string` | `github` | no |
 | python-version | Python version to be used during testing | `string` | `3.9.25` | no |
 | ansible-version | Ansible version to be used during testing (must be supported by the specified Python version) | `string` | `10.7.0` | no |
-| ansible-user | Operative system user which Ansible impersonates when connecting to the test compute intance | `string` | n/a | yes |
+| ansible-user | Operative system user which Ansible impersonates when connecting to the test compute instance | `string` | n/a | yes |
 | ansible-ssh-private-key | Value of the private ssh keypair for compute instance access | `string` | n/a | yes |
 | path-to-main-file | Path to main file for the Ansible Playbook execution. Example: `playbooks/ssh-bastion-flavour/ssh-bastion-flavour.yml` | `string` | n/a | yes |
 | path-to-requirements-file | Path to requirements file needed for the Ansible Playbook. Example: `playbooks/ssh-bastion-flavour/requirements.yml` | `string` | n/a | no |
