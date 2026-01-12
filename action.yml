@@ -4,85 +4,85 @@ description: |
   against the instance, collects artifacts, and cleans up resources afterwards.
 
 inputs:
-  os-auth-url:
+  osAuthUrl:
     description: 'URL pointing to OpenStack authentication API'
     required: true
 
-  os-region-name:
+  osRegionName:
     description: 'OpenStack region name. Example: RegionOne'
     required: true
 
-  os-application-credential-id:
+  osApplicationCredentialId:
     description: 'OpenStack application credential ID'
     required: true
 
-  os-application-credential-secret:
+  osApplicationCredentialSecret:
     description: 'OpenStack application credential secret'
     required: true
 
-  os-external-network-name:
+  osExternalNetworkName:
     description: 'Name of the external OpenStack network for floating IPs'
     required: true
 
-  os-private-network-name:
+  osPrivateNetworkName:
     description: 'Name of the private OpenStack network name to attach the test compute instance to'
     required: true
 
-  os-security-group-name:
-    description: 'Name of the OpenStack security group assigned to the test compute instance'
+  osSecurityGroupName:
+    description: 'Name of the OpenStack security group assgined to the test compute instance'
     required: true
 
-  os-keypair-name:
+  osKeypairName:
     description: 'Name of the pre-uploaded public ssh keypair in OpenStack'
     required: true
 
-  os-flavor-name:
+  osFlavorName:
     description: 'Name the OpenStack flavor to use for the instance'
     required: true
 
-  os-image-name:
+  osImageName:
     description: 'Name of the image to use for the OpenStack compute instance'
     required: true
 
-  instance-name-prefix:
+  instanceNamePrefix:
     description: 'Prefix for the OpenStack compute instance (will prepend to the GitHub run id)'
     required: false
     default: 'github'
 
-  python-version:
+  pythonVersion:
     description: 'Python version to be used during testing'
     required: false
     default: '3.10.19'
 
-  ansible-version:
+  ansibleVersion:
     description: 'Ansible version to be used during testing (must be supported by the specified Python version)'
     required: false
     default: '10.7.0'
 
-  ansible-user:
-    description: 'Operative system user which Ansible impersonates when connecting to the test compute instance'
+  ansibleUser:
+    description: 'Operative system user which Ansible impersonates when connecting to the test compute intance'
     required: true
 
-  ansible-ssh-private-key:
+  ansibleSshPrivateKey:
     description: 'Value of the private ssh keypair for compute instance access'
     required: true
 
-  path-to-main-file:
+  pathToMainFile:
     description: 'Path to main file for the Ansible Playbook execution. Example: site.yml'
     required: true
 
-  path-to-requirements-file:
+  pathToRequirementsFile:
     description: 'Path to requirements file needed for the Ansible Playbook. Example: requirements.yml'
     required: false
 
-  input-spec-json:
+  inputSpecJson:
     description: 'Input values for the Ansible Playbook, in JSON format'
     required: false
 
 outputs:
-  artifact-path:
+  artifactPath:
     description: 'Path where artifacts were written in the workflow workspace'
-    value: ${{ steps.test-deploy-ansible-playbook.outputs.artifact-path }}
+    value: ${{ steps.test-deploy-ansible-playbook.outputs.artifactPath }}
 
 runs:
   using: 'composite'
@@ -96,12 +96,12 @@ runs:
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: ${{ inputs.python-version }}
+          python-version: ${{ inputs.pythonVersion }}
 
       - name: Setup Ansible
         run: |
           pip install --upgrade pip
-          pip install --no-cache-dir python-openstackclient ansible==${{ inputs.ansible-version }}
+          pip install --no-cache-dir python-openstackclient ansible==${{ inputs.ansibleVersion }}
         shell: bash
 
       - name: Set GitHub Path
@@ -116,19 +116,19 @@ runs:
         shell: bash
         env:
           TF_IN_AUTOMATION: true
-          OS_AUTH_URL: ${{ inputs.os-auth-url }}
-          OS_REGION_NAME: ${{ inputs.os-region-name }}
-          OS_APPLICATION_CREDENTIAL_ID: ${{ inputs.os-application-credential-id }}
-          OS_APPLICATION_CREDENTIAL_SECRET: ${{ inputs.os-application-credential-secret }}
-          ANSIBLE_SSH_PRIVATE_KEY: ${{ inputs.ansible-ssh-private-key }}
-          OS_EXTERNAL_NETWORK_NAME: ${{ inputs.os-external-network-name }}
-          OS_PRIVATE_NETWORK_NAME: ${{ inputs.os-private-network-name }}
-          OS_SECURITY_GROUP_NAME: ${{ inputs.os-security-group-name }}
-          OS_FLAVOR_NAME: ${{ inputs.os-flavor-name }}
-          OS_IMAGE_NAME: ${{ inputs.os-image-name }}
-          OS_KEYPAIR_NAME: ${{ inputs.os-keypair-name }}
-          ANSIBLE_USER: ${{ inputs.ansible-user }}
-          INSTANCE_NAME_PREFIX: ${{ inputs.instance-name-prefix }}
-          PATH_TO_MAIN_FILE: ${{ inputs.path-to-main-file }}
-          PATH_TO_REQUIREMENTS_FILE: ${{ inputs.path-to-requirements-file }}
-          INPUT_SPEC_JSON: ${{ inputs.input-spec-json }}
+          OS_AUTH_URL: ${{ inputs.osAuthUrl }}
+          OS_REGION_NAME: ${{ inputs.osRegionName }}
+          OS_APPLICATION_CREDENTIAL_ID: ${{ inputs.osApplicationCredentialId }}
+          OS_APPLICATION_CREDENTIAL_SECRET: ${{ inputs.osApplicationCredentialSecret }}
+          ANSIBLE_SSH_PRIVATE_KEY: ${{ inputs.ansibleSshPrivateKey }}
+          OS_EXTERNAL_NETWORK_NAME: ${{ inputs.osExternalNetworkName }}
+          OS_PRIVATE_NETWORK_NAME: ${{ inputs.osPrivateNetworkName }}
+          OS_SECURITY_GROUP_NAME: ${{ inputs.osSecurityGroupName }}
+          OS_FLAVOR_NAME: ${{ inputs.osFlavorName }}
+          OS_IMAGE_NAME: ${{ inputs.osImageName }}
+          OS_KEYPAIR_NAME: ${{ inputs.osKeypairName }}
+          ANSIBLE_USER: ${{ inputs.ansibleUser }}
+          INSTANCE_NAME_PREFIX: ${{ inputs.instanceNamePrefix }}
+          PATH_TO_MAIN_FILE: ${{ inputs.pathToMainFile }}
+          PATH_TO_REQUIREMENTS_FILE: ${{ inputs.pathToRequirementsFile }}
+          INPUT_SPEC_JSON: ${{ inputs.inputSpecJson }}
