@@ -13,7 +13,7 @@ if [ -z "$INPUT_SPEC_JSON" ]; then
   INPUT_SPEC_JSON="{}"
 fi
 if ! printf "%s" "$INPUT_SPEC_JSON" | jq -e . >/dev/null 2>&1; then
-  echo "::error::input-spec-json is invalid JSON. Got: '$INPUT_SPEC_JSON'"
+  echo "::error::inputSpecJson is invalid JSON. Got: '$INPUT_SPEC_JSON'"
   exit 1
 fi
 
@@ -209,7 +209,7 @@ cp $GITHUB_STEP_SUMMARY "$ARTIFACTS_DIR/summary.md"
 
 # --- Step 17 ---
 echo "Write GitHub action outputs"
-echo "artifact-path=$ARTIFACTS_DIR" >> "$GITHUB_OUTPUT"
+echo "artifactPath=$ARTIFACTS_DIR" >> "$GITHUB_OUTPUT"
 
 # --- Step 18 ---
 echo "Teardown test instance"
