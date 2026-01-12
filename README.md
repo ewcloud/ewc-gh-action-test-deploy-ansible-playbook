@@ -1,8 +1,12 @@
-# Test Deploy Ansible Playbook v1
+# Test Deploy Ansible Playbook v2
 
 This GitHub Action setups all necessary OpenStack resources for a Ansible Playbook to run,  executes it and reports about its success/failure in a nice looking summary (within GitHub UI), as well as machine-friendly artifacts for postprocessing.
 
 Runs with user-defined `Python` and `Ansible` versions, extra variable inputs and any `Ansible Roles` a test scenario may require.
+
+## What's new
+
+- Added compatibility with the [ewc-community-hub](https://github.com/ewcloud/ewc-community-hub) repository to enable upstream test orchestration and by enforcing naming and formatting convention of workflow inputs.
 
 
 ## Prerequisites
@@ -45,55 +49,55 @@ jobs:
         id: test-deployment
         uses: ewcloud/ewc-gh-action-test-deploy-ansible-playbook@v1
         with:
-          os-auth-url: '${{ secrets.OS_AUTH_URL }}'
-          os-region-name: '${{ secrets.OS_REGION_NAME }}'
-          os-application-credential-id: '${{ secrets.OS_APPLICATION_CREDENTIAL_ID }}'
-          os-application-credential-secret: '${{ secrets.OS_APPLICATION_CREDENTIAL_SECRET }}'
-          os-external-network-name: 'external'
-          os-private-network-name: 'private'
-          os-security-group-name: 'ssh'
-          os-flavor-name: 'eo1.small'
-          os-image-name: 'ubuntu-24.04-20250604102601'
-          os-keypair-name: 'github-keypair'
-          ansible-user: 'ubuntu'
-          ansible-ssh-private-key: '${{ secrets.ANSIBLE_SSH_PRIVATE_KEY }}'
-          path-to-main-file: 'site.yml'
+          osAuthUrl: '${{ secrets.OS_AUTH_URL }}'
+          osRegionName: '${{ secrets.OS_REGION_NAME }}'
+          osApplicationCredentialId: '${{ secrets.OS_APPLICATION_CREDENTIAL_ID }}'
+          osApplicationCredentialSecret: '${{ secrets.OS_APPLICATION_CREDENTIAL_SECRET }}'
+          osExternalNetworkName: 'external'
+          osPrivateNetworkName: 'private'
+          osSecurityGroupName: 'ssh'
+          osFlavorName: 'eo1.small'
+          osImageName: 'ubuntu-24.04-20250604102601'
+          osKeypairName: 'github-keypair'
+          ansibleUser: 'ubuntu'
+          ansibleSshPrivateKey: '${{ secrets.ANSIBLE_SSH_PRIVATE_KEY }}'
+          pathToMainFile: 'site.yml'
 
       - name: Upload test deployment result
         uses: actions/upload-artifact@v4
         with:
           name: artifacts_${{ github.run_id }}
-          path: ${{ steps.test-deployment.outputs.artifact-path }}
+          path: ${{ steps.test-deployment.outputs.artifactPath }}
 ```
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| os-auth-url | URL pointing to OpenStack authentication API | `string` | n/a | yes |
-| os-region-name | OpenStack region name. Example: `RegionOne` | `string` | n/a | yes |
-| os-application-credential-id | OpenStack application credential ID | `string` | n/a | yes |
-| os-application-credential-secret | OpenStack application credential secret | `string` | n/a | yes |
-| os-external-network-name | Name of the external OpenStack network for floating IPs | `string` | n/a | yes |
-| os-private-network-name | Name of the private OpenStack network name to attach the test compute instance to | `string` | n/a | yes |
-| os-security-group-name | Name of the OpenStack security group assigned to the test compute instance | `string` | n/a | yes |
-| os-keypair-name | Name of the pre-uploaded public ssh keypair in OpenStack | `string` | n/a | yes |
-| os-flavor-name | Name the OpenStack flavor to use for the instance | `string` | n/a | yes |
-| os-image-name | Name of the image to use for the OpenStack compute instance | `string` | n/a | yes |
-| instance-name-prefix | Prefix for the OpenStack compute instance (will prepend to the GitHub run id) | `string` | `github` | no |
-| python-version | Python version to be used during testing | `string` | `3.9.25` | no |
-| ansible-version | Ansible version to be used during testing (must be supported by the specified Python version) | `string` | `10.7.0` | no |
-| ansible-user | Operative system user which Ansible impersonates when connecting to the test compute instance | `string` | n/a | yes |
-| ansible-ssh-private-key | Value of the private ssh keypair for compute instance access | `string` | n/a | yes |
-| path-to-main-file | Path to main file for the Ansible Playbook execution. Example: `playbooks/ssh-bastion-flavour/ssh-bastion-flavour.yml` | `string` | n/a | yes |
-| path-to-requirements-file | Path to requirements file needed for the Ansible Playbook. Example: `playbooks/ssh-bastion-flavour/requirements.yml` | `string` | n/a | no |
-| input-spec-json | Input values for the Ansible Playbook, in JSON format. Example: `{"subscription_timestamp_override":"20251203_11h37m00s"}` | `string` | n/a | no |
+| ansibleSshPrivateKey | Value of the private ssh keypair for compute instance access | `string` | n/a | yes |
+| ansibleUser | Operative system user which Ansible impersonates when connecting to the test compute instance | `string` | n/a | yes |
+| ansibleVersion | Ansible version to be used during testing (must be supported by the specified Python version) | `string` | `10.7.0` | yes |
+| osApplicationCredentialId | OpenStack application credential ID | `string` | n/a | yes |
+| osApplicationCredentialSecret | OpenStack application credential secret | `string` | n/a | yes |
+| osAuthUrl | URL pointing to OpenStack authentication API | `string` | n/a | yes |
+| osExternalNetworkName | Name of the external OpenStack network for floating IPs | `string` | n/a | yes |
+| osFlavorName | Name the OpenStack flavor to use for the instance | `string` | n/a | yes |
+| osImageName | Name of the image to use for the OpenStack compute instance | `string` | n/a | yes |
+| osKeypairName | Name of the pre-uploaded public ssh keypair in OpenStack | `string` | n/a | yes |
+| osPrivateNetworkName | Name of the private OpenStack network name to attach the test compute instance to | `string` | n/a | yes |
+| osRegionName | OpenStack region name. Example: `RegionOne` | `string` | n/a | yes |
+| osSecurityGroupName | Name of the OpenStack security group assigned to the test compute instance | `string` | n/a | yes |
+| pathToMainFile | Path to main file for the Ansible Playbook execution. Example: `playbooks/ssh-bastion-flavour/ssh-bastion-flavour.yml` | `string` | n/a | yes |
+| pathToRequirementsFile | Path to requirements file needed for the Ansible Playbook. Example: `playbooks/ssh-bastion-flavour/requirements.yml` | `string` | n/a | no |
+| pythonVersion | Python version to be used during testing | `string` | `3.9.25` | yes |
+| inputSpecJson | Input values for the Ansible Playbook, in JSON format. Example: `{"fail2ban_whitelisted_ip_ranges":""}` | `string` | n/a | no |
+| instanceNamePrefix | Prefix for the OpenStack compute instance (will prepend to the GitHub run id) | `string` | `github` | yes |
 
 ## Outputs
 
 | Name | Description | Type |
 |------|-------------|------|
-| artifact-path | Path where artifacts were written in the workflow workspace | `string` |
+| artifactPath | Path where artifacts were written in the workflow workspace | `string` |
 
 ## Development
 
