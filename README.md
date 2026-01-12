@@ -8,6 +8,19 @@ Runs with user-defined `Python` and `Ansible` versions, extra variable inputs an
 
 - Added compatibility with the [ewc-community-hub](https://github.com/ewcloud/ewc-community-hub) repository to enable upstream test orchestration and by enforcing naming and formatting convention of workflow inputs.
 
+## Copyright and License
+Copyright © EUMETSAT 2026.
+
+The provided code and instructions are licensed under [MIT license](./LICENSE).
+They are intended to automate the setup of an environment that includes
+third-party software components.
+The usage and distribution terms of the resulting environment are
+subject to the individual licenses of those third-party libraries.
+
+Users are responsible for reviewing and complying with the licenses of
+all third-party components included in the environment.
+
+Contact [EUMETSAT](http://www.eumetsat.int) for details on the usage and distribution terms.
 
 ## Prerequisites
 
@@ -47,7 +60,7 @@ jobs:
 
       - name: Test deployment
         id: test-deployment
-        uses: ewcloud/ewc-gh-action-test-deploy-ansible-playbook@v1
+        uses: ewcloud/ewc-gh-action-test-deploy-ansible-playbook@v2
         with:
           osAuthUrl: '${{ secrets.OS_AUTH_URL }}'
           osRegionName: '${{ secrets.OS_REGION_NAME }}'
@@ -98,6 +111,20 @@ jobs:
 | Name | Description | Type |
 |------|-------------|------|
 | artifactPath | Path where artifacts were written in the workflow workspace | `string` |
+
+## Contributing
+
+Thanks for taking the time to join our community and start contributing!
+Please make sure to:
+* Familiarize yourself with our [Code of Conduct](./CODE_OF_CONDUCT.md) before
+contributing.
+* See [CONTRIBUTING.md](./CONTRIBUTING.md) for instructions on how to request
+or submit changes.
+
+## Authors
+
+[European Weather Cloud](http://support.europeanweather.cloud/)
+<[support@europeanweather.cloud](mailto:support@europeanweather.cloud)>
 
 ## Development
 
