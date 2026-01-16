@@ -37,6 +37,7 @@ Contact [EUMETSAT](http://www.eumetsat.int) for details on the usage and distrib
 
 
 ## Usage
+>💡 For live usage examples in EWC Community Hub's context, checkout these [ECMWF test workflow](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/blob/main/.github/workflows/test-ecmwf.yml) and [EUMETSAT test workflow](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/blob/main/.github/workflows/test-eumetsat.yml) definitions.
 
 ```yaml
 # .github/workflows/test.yml
