@@ -24,15 +24,15 @@ Contact [EUMETSAT](http://www.eumetsat.int) for details on the usage and distrib
 
 ## Prerequisites
 
-*. Get OpenStack API credentials (see [How to request OpenStack Application Credentials](https://confluence.ecmwf.int/x/TiRNH) section of the EWC documentation)
-*. Extract the following attributes from your app credentials and store them within your repository's GitHub secrets (see [Creating secrets for a repository](https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/use-secrets#creating-secrets-for-a-repository) section of the GitHub documentation):
+* Get OpenStack API credentials (see [How to request OpenStack Application Credentials](https://confluence.ecmwf.int/x/TiRNH) section of the EWC documentation)
+* Extract the following attributes from your app credentials and store them within your repository's GitHub secrets (see [Creating secrets for a repository](https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/use-secrets#creating-secrets-for-a-repository) section of the GitHub documentation):
     - `OS_AUTH_URL`
     - `OS_REGION_NAME`
     - `OS_APPLICATION_CREDENTIAL_ID`
     - `OS_APPLICATION_CREDENTIAL_SECRET`
-*. Create an SSH keypair (see [Generating a new SSH key](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent?platform=linux#generating-a-new-ssh-key) section of the GitHub documentation )
-*. Add you SSH public key to OpenStack (see [Import SSH Key](https://confluence.ecmwf.int/x/TyRNH) section of the EWC documentation).
-*. Once more, update your repository's GitHub secrets to include the value of the private ssh key as:
+* Create an SSH keypair (see [Generating a new SSH key](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent?platform=linux#generating-a-new-ssh-key) section of the GitHub documentation )
+* Add you SSH public key to OpenStack (see [Import SSH Key](https://confluence.ecmwf.int/x/TyRNH) section of the EWC documentation).
+* Once more, update your repository's GitHub secrets to include the value of the private ssh key as:
     - `ANSIBLE_SSH_PRIVATE_KEY`
 
 
