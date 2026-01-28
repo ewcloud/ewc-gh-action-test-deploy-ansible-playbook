@@ -203,8 +203,13 @@ if [ "$INPUT_SPEC_JSON" != "{}" ]; then
 fi
 if [ -f "$ARTIFACTS_DIR/sbom.json" ]; then
   add_summary "#### Software Bill of Materials"
+  add_summary ">💡 This section contains only an excerpt of the SBOM. Checkout the sbom.json file, attached as part of the run artifacts, for complete information on installed dependencies."
+  add_summary ""
   add_summary "\`\`\`json"
-  jq . "$ARTIFACTS_DIR/sbom.json" >> "$GITHUB_STEP_SUMMARY"
+  jq . "$ARTIFACTS_DIR/sbom.json"  | head -n 150 >> "$GITHUB_STEP_SUMMARY"
+  add_summary ""
+  add_summary "    ..."
+  add_summary ""
   add_summary "\`\`\`"
 fi
 add_summary "---"
