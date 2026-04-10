@@ -3,6 +3,13 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.3](https://github.com/ewcloud/ewc-gh-action-test-deploy-ansible-playbook/compare/2.1.2...2.1.3) (2026-04-10)
+
+
+### Bug Fixes
+
+* Raise wait time prior to ssh to prevent premature connection failures ([#8](https://github.com/ewcloud/ewc-gh-action-test-deploy-ansible-playbook/issues/8)) ([950f763](https://github.com/ewcloud/ewc-gh-action-test-deploy-ansible-playbook/commit/950f76316262c23aba76a727533860d0a8b2b231))
+
 ## [2.1.2](https://github.com/ewcloud/ewc-gh-action-test-deploy-ansible-playbook/compare/2.1.1...2.1.2) (2026-01-29)
 
 
