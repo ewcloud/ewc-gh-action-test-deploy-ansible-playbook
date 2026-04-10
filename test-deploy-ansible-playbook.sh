@@ -102,7 +102,7 @@ fi
 # --- Step 11 ---
 if [ -n "$FLOATING_IP" ]; then
   echo "Wait for SSH on instance at ${FLOATING_IP}"
-  SSH_WAIT_SECS=120
+  SSH_WAIT_SECS=180
   sleep $SSH_WAIT_SECS
 fi
 
