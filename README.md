@@ -1,26 +1,15 @@
-# Test Deploy Ansible Playbook v2
+# Test Deploy Ansible Playbook
 
 This GitHub Action setups all necessary OpenStack resources for a Ansible Playbook to run,  executes it and reports about its success/failure in a nice looking summary (within GitHub UI), as well as machine-friendly artifacts for postprocessing.
 
-Runs with user-defined `Python` and `Ansible` versions, extra variable inputs and any `Ansible Roles` a test scenario may require.
+Takes in user-defined `Python` and `Ansible` versions, extra variable inputs and any number of  `Ansible Roles` required.
 
-## What's new
+## v2
+### What's new
 
 - Added compatibility with the [ewc-community-hub](https://github.com/ewcloud/ewc-community-hub) repository to enable upstream test orchestration and by enforcing naming and formatting convention of workflow inputs.
 
-## Copyright and License
-Copyright © EUMETSAT 2026.
-
-The provided code and instructions are licensed under [MIT license](./LICENSE).
-They are intended to automate the setup of an environment that includes
-third-party software components.
-The usage and distribution terms of the resulting environment are
-subject to the individual licenses of those third-party libraries.
-
-Users are responsible for reviewing and complying with the licenses of
-all third-party components included in the environment.
-
-Contact [EUMETSAT](http://www.eumetsat.int) for details on the usage and distribution terms.
+Please refer to the [CHANGELOG](./CHANGELOG.md) for more details about the latests release.
 
 ## Prerequisites
 
@@ -40,7 +29,7 @@ Contact [EUMETSAT](http://www.eumetsat.int) for details on the usage and distrib
 >💡 For live usage examples in EWC Community Hub's context, checkout these [ECMWF test workflow](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/blob/main/.github/workflows/test-ecmwf.yml) and [EUMETSAT test workflow](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/blob/main/.github/workflows/test-eumetsat.yml) definitions.
 
 ```yaml
-# .github/workflows/test.yml
+# .github/workflows/test-eumetsat.yml
 ---
 name: Test Deploy Ansible Playbook
 
@@ -57,7 +46,7 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Test deployment
         id: test-deployment
@@ -78,10 +67,11 @@ jobs:
           pathToMainFile: 'site.yml'
 
       - name: Upload test deployment result
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: artifacts_${{ github.run_id }}
           path: ${{ steps.test-deployment.outputs.artifactPath }}
+          retention-days: 90
 ```
 
 ## Inputs
@@ -119,6 +109,24 @@ jobs:
 | ----- | -----|
 | ewc-tf-module-openstack-compute | https://github.com/ewcloud/ewc-tf-module-openstack-compute |
 
+## Copyright and License
+Copyright © EUMETSAT 2026.
+
+The provided code and instructions are licensed under [MIT license](./LICENSE).
+They are intended to automate the setup of an environment that includes
+third-party software components.
+The usage and distribution terms of the resulting environment are
+subject to the individual licenses of those third-party libraries.
+
+Users are responsible for reviewing and complying with the licenses of
+all third-party components included in the environment.
+
+Contact [EUMETSAT](http://www.eumetsat.int) for details on the usage and distribution terms.
+
+## Authors
+
+[European Weather Cloud](http://support.europeanweather.cloud/)
+<[support@europeanweather.cloud](mailto:support@europeanweather.cloud)>
 
 ## Contributing
 
@@ -128,11 +136,6 @@ Please make sure to:
 contributing.
 * See [CONTRIBUTING.md](./CONTRIBUTING.md) for instructions on how to request
 or submit changes.
-
-## Authors
-
-[European Weather Cloud](http://support.europeanweather.cloud/)
-<[support@europeanweather.cloud](mailto:support@europeanweather.cloud)>
 
 ## Development
 
