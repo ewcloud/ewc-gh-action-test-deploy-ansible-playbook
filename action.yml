@@ -88,13 +88,13 @@ runs:
   using: 'composite'
   steps:
       - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
+        uses: hashicorp/setup-terraform@v4
         with:
           terraform_version: 1.14.1
           terraform_wrapper: false
 
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: ${{ inputs.pythonVersion }}
 
