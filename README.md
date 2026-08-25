@@ -59,8 +59,8 @@ jobs:
           osExternalNetworkName: 'external'
           osPrivateNetworkName: 'private'
           osSecurityGroupName: 'ssh'
-          osFlavorName: 'eo1.small'
-          osImageName: 'ubuntu-24.04-20250604102601'
+          osFlavorName: '2cpu-2gbmem'
+          osImageName: 'Ubuntu-24.04-20260519071420'
           osKeypairName: 'github-keypair'
           ansibleUser: 'ubuntu'
           ansibleSshPrivateKey: '${{ secrets.ANSIBLE_SSH_PRIVATE_KEY }}'
@@ -136,8 +136,3 @@ Please make sure to:
 contributing.
 * See [CONTRIBUTING.md](./CONTRIBUTING.md) for instructions on how to request
 or submit changes.
-
-## Development
-
-### TODOs
-- Add proper SSH status polling (with netcat or similar utility)

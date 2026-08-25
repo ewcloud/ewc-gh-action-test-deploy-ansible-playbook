@@ -55,7 +55,7 @@ cat > /tmp/vars.tfvars <<EOF
 image_name            = "${OS_IMAGE_NAME}"
 flavor_name           = "${OS_FLAVOR_NAME}"
 app_name              = "${INSTANCE_NAME_PREFIX}"
-instance_name         = "vm"
+instance_name         = "run"
 instance_index        = ${GITHUB_RUN_ID}
 networks              = ["${OS_PRIVATE_NETWORK_NAME}"]
 external_network_name = "${OS_EXTERNAL_NETWORK_NAME}"
@@ -68,7 +68,7 @@ EOF
 echo "Download Terraform module"
 TF_DIR="/tmp/tf-module"
 TF_MODULE_URL="https://github.com/ewcloud/ewc-tf-module-openstack-compute.git"
-TF_MODULE_REF="1.4.0"
+TF_MODULE_REF="1.6.0"
 rm -rf "$TF_DIR"
 git clone "$TF_MODULE_URL" "$TF_DIR"
 cd "$TF_DIR"
@@ -228,6 +228,6 @@ terraform destroy -auto-approve -var-file=/tmp/vars.tfvars
 # -- Step 19 ---
 echo "Re-rasing test errors (if any)"
 if [ "$TERRAFORM_STATUS" = "failing" ] || [ "$ANSIBLE_STATUS" = "failing" ]; then
-  echo "::error::One or more failures caught during testing. See the summary or logs for details"
+  echo "::error::Deployment test(s) FAILING!. See the Summary or logs for details"
   exit 1
 fi
