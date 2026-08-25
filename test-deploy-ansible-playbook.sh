@@ -68,7 +68,7 @@ EOF
 echo "Download Terraform module"
 TF_DIR="/tmp/tf-module"
 TF_MODULE_URL="https://github.com/ewcloud/ewc-tf-module-openstack-compute.git"
-TF_MODULE_REF="1.4.0"
+TF_MODULE_REF="1.6.0"
 rm -rf "$TF_DIR"
 git clone "$TF_MODULE_URL" "$TF_DIR"
 cd "$TF_DIR"
