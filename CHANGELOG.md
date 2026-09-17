@@ -3,6 +3,13 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.1](https://github.com/ewcloud/ewc-gh-action-test-deploy-ansible-playbook/compare/2.2.0...2.2.1) (2026-09-17)
+
+
+### Bug Fixes
+
+* Format log timestamps and eanble python interpreter auto-resolution ([#11](https://github.com/ewcloud/ewc-gh-action-test-deploy-ansible-playbook/issues/11)) ([111c4d6](https://github.com/ewcloud/ewc-gh-action-test-deploy-ansible-playbook/commit/111c4d63fa27d0691704c1b34cdba1c5d6eb4a4e))
+
 # [2.2.0](https://github.com/ewcloud/ewc-gh-action-test-deploy-ansible-playbook/compare/2.1.3...2.2.0) (2026-08-25)
 
 
