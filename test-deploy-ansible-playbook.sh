@@ -113,7 +113,7 @@ cat > "$INVENTORY_FILE" <<EOF
 all:
   hosts:
     test_instance:
-      ansible_python_interpreter: /usr/bin/python3
+      ansible_python_interpreter: auto
       ansible_host: ${FLOATING_IP}
       ansible_ssh_private_key_file: ${ANSIBLE_SSH_PRIVATE_KEY_FILE}
       ansible_user: ${ANSIBLE_USER}
